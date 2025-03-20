@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV Master</string>
+    <string name="conection">Conecting...</string>
+    <string name="failed_conection">No conection</string>
+    <string name="large_failed_conection">Connection error with the device.</string>
+</resources>
