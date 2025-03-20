@@ -20,7 +20,7 @@ class SplashViewModel : ViewModel() {
     private fun startSplashTimer() {
         viewModelScope.launch {
             delay(3000) // Espera 3 segundos
-            _navigateToHome.value = true
+            //_navigateToHome.value = true
         }
     }
 }
