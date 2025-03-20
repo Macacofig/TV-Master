@@ -12,4 +12,9 @@
     <string name="developers">Desarrolladores: .....</string>
     <string name="created_with">Creado en Kotlin.....</string>
     <string name="leave_feedback">Déjanos tu opinión:</string>
+    <string name="card01">Aplicaciones</string>
+    <string name="card02">Mando a distancia</string>
+    <string name="texto_card02">Controlar el televisor conectado.</string>
+    <string name="card03">Compartir contenido</string>
+    <string name="texto_card03">Reproducir fotos, videos y música del teléfono en el televisor.</string>
 </resources>
