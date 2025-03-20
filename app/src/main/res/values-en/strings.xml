@@ -13,4 +13,9 @@
     <string name="developers">Developers: .....</string>
     <string name="created_with">Created with Kotlin.....</string>
     <string name="leave_feedback">Leave your feedback:</string>
+    <string name="card01">Apps</string>
+    <string name="card02">Remote control</string>
+    <string name="texto_card02">Control the connected TV.</string>
+    <string name="card03">Share content</string>
+    <string name="texto_card03">Play photos, videos, and music from your phone on your TV.</string>
 </resources>
