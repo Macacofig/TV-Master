@@ -59,4 +59,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation (libs.androidx.navigation.compose)
     implementation(project(":usecases"))
+    implementation(libs.material3) // Usa la última versión disponible
+
+    implementation(libs.androidx.material.icons.extended)
 }
