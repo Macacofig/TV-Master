@@ -9,12 +9,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+
 
 @Composable
 fun SplashScreen(navController: NavController, viewModel: SplashViewModel = viewModel()) {
@@ -71,5 +77,19 @@ fun SplashScreen(navController: NavController, viewModel: SplashViewModel = view
             color = textColor,
             modifier = Modifier.offset(dx.dp, dy.dp)
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    // Creamos un NavController para el preview
+    val navController = rememberNavController()
+
+    // Definimos el NavHost con la ruta "splash"
+    NavHost(navController = navController, startDestination = "splash") {
+        composable("splash") {
+            SplashScreen(navController)
+        }
     }
 }
