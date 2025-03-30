@@ -1,9 +1,8 @@
 package com.control.app.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import com.control.app.ui.ControlViewModel
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -25,8 +24,10 @@ import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.ui.tooling.preview.Preview
+
 @Composable
-fun ControlScreen(viewModel: ControlViewModel) {
+fun ControlScreen(viewModel: FakeControlViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,12 +73,19 @@ fun ControlScreen(viewModel: ControlViewModel) {
         Spacer(modifier = Modifier.height(20.dp))
 
         // Botones de volumen y canal
-        Column {
-            ControlButton(icon = Icons.AutoMirrored.Filled.VolumeUp, onClick = { /* Subir volumen */ })
-            ControlButton(icon = Icons.AutoMirrored.Filled.VolumeDown, onClick = { /* Bajar volumen */ })
-            Spacer(modifier = Modifier.height(10.dp))
-            ControlButton(icon = Icons.Default.Add, onClick = { /* Subir canal */ })
-            ControlButton(icon = Icons.Default.Remove, onClick = { /* Bajar canal */ })
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ControlButton(icon = Icons.AutoMirrored.Filled.VolumeUp, onClick = { /* Subir volumen */ })
+                ControlButton(icon = Icons.AutoMirrored.Filled.VolumeDown, onClick = { /* Bajar volumen */ })
+            }
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ControlButton(icon = Icons.Default.Add, onClick = { /* Subir canal */ })
+                ControlButton(icon = Icons.Default.Remove, onClick = { /* Bajar canal */ })
+            }
         }
     }
 }
@@ -94,3 +102,9 @@ fun ControlButton(icon: ImageVector, onClick: () -> Unit) {
     }
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
+@Preview(showBackground = true)
+@Composable
+fun PreviewControlScreen() {
+    ControlScreen(viewModel = FakeControlViewModel())
+}

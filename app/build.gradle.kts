@@ -62,4 +62,7 @@ dependencies {
     implementation(libs.material3) // Usa la última versión disponible
 
     implementation(libs.androidx.material.icons.extended)
+
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android) // Usa la última versión disponible
 }
