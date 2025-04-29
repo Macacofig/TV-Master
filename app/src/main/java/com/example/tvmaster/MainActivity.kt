@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dvd.ui.splash.SplashScreen
 //import com.dvd.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
