@@ -1,4 +1,4 @@
-package com.example.tvmaster
+package com.example.tvmaster.ConexionFailed
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,9 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tvmaster.R
 
 @Composable
-fun ConexionFallidaScreen() {
+fun ConexionFailedUI() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -97,5 +98,5 @@ fun ConexionFallidaScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewConexionFallida() {
-    ConexionFallidaScreen()
+    ConexionFailedUI()
 }
