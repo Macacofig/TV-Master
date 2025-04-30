@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
-fun SplashScreen(navController: NavController, viewModel: SplashViewModel = viewModel()) {
+fun SplashUI(navController: NavController) {
     var textColor by remember { mutableStateOf(Color.White) }
     val transition = rememberInfiniteTransition()
 
@@ -45,22 +44,24 @@ fun SplashScreen(navController: NavController, viewModel: SplashViewModel = view
         )
     )
 
-    // Cambio de color del texto cada 2 segundos
+    // Cambio de color y navegación automática después de 3 segundos
     LaunchedEffect(Unit) {
-        while (true) {
-            textColor = listOf(Color.Red, Color.Green, Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta, Color.White).random()
-            delay(2000)
+        repeat(1) {
+            delay(3000)
+            navController.navigate("menu") {
+                popUpTo("splash") { inclusive = true }
+            }
         }
     }
 
-    // Observar el ViewModel para la navegación
-    LaunchedEffect(viewModel) {
-        viewModel.navigateToHome.collectLatest { shouldNavigate ->
-            if (shouldNavigate) {
-                navController.navigate("home") {
-                    popUpTo("splash") { inclusive = true }
-                }
-            }
+    // Cambio continuo de color del texto
+    LaunchedEffect(Unit) {
+        while (true) {
+            textColor = listOf(
+                Color.Red, Color.Green, Color.Blue,
+                Color.Yellow, Color.Cyan, Color.Magenta, Color.White
+            ).random()
+            delay(2000)
         }
     }
 
@@ -89,7 +90,7 @@ fun SplashScreenPreview() {
     // Definimos el NavHost con la ruta "splash"
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
-            SplashScreen(navController)
+            SplashUI(navController)
         }
     }
 }

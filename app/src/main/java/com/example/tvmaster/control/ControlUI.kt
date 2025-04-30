@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ControlScreen(viewModel: FakeControlViewModel) {
+fun ControlUI(viewModel: FakeControlViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -202,5 +202,5 @@ fun ControlButton(icon: ImageVector, onClick: () -> Unit, buttonColor: Color) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewControlScreen() {
-    ControlScreen(viewModel = FakeControlViewModel())
+    ControlUI(viewModel = FakeControlViewModel())
 }
