@@ -1,4 +1,4 @@
-package com.example.tvmaster
+package com.example.tvmaster.Menu
 
 import android.graphics.Paint.Align
 import android.os.Bundle
@@ -28,10 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tvmaster.R
 import com.example.tvmaster.ui.theme.TVMasterTheme
 
 @Composable
-fun MenuPantalla() {
+fun MenuUI() {
     val semiPlomo = Color(red = 40, green = 40, blue = 40, alpha = 180)
     val plomoClaro = Color(red = 61, green = 61, blue = 61)
     Box(
@@ -324,5 +325,5 @@ fun MenuPantalla() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMenuPantalla() {
-    MenuPantalla()
+    MenuUI()
 }

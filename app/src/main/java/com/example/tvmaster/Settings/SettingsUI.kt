@@ -1,4 +1,4 @@
-package com.example.tvmaster
+package com.example.tvmaster.Settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +18,7 @@ import com.example.tvmaster.R
 
 
 @Composable
-fun SettingsScreen() {
+fun SettingsUI() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,5 +81,5 @@ fun SettingsOption(title: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSettingsScreen() {
-    SettingsScreen()
+    SettingsUI()
 }
