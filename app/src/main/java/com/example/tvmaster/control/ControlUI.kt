@@ -1,184 +1,191 @@
 package com.example.tvmaster.control
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.automirrored.filled.VolumeDown
-import androidx.compose.material.icons.automirrored.filled.VolumeUp
-import androidx.compose.material.icons.filled.*
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.material.icons.filled.PowerSettingsNew
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ControlUI(viewModel: FakeControlViewModel) {
+fun ControlUI(viewModel: FakeControlViewModel = FakeControlViewModel()) {
+    var currentAppPage by remember { mutableStateOf(0) }
+    val appPages = listOf(
+        listOf("Netflix", "YouTube", "Prime Video"),
+        listOf("Disney+", "HBO Max", "Spotify")
+    )
+
+    var showMousepad by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(32.dp)
-            .clip(RoundedCornerShape(16.dp))  // Margen con bordes redondeados como un control remoto
-            .border(2.dp, Color.Gray, RoundedCornerShape(16.dp)), // Borde gris alrededor
+            .padding(16.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .border(3.dp, Color.Gray, RoundedCornerShape(24.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Fila superior: Apagar - Inicio
+
+        // Botón de volver
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(bottom = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = { /* acción volver */ }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
+            }
+            Text("Volver", color = Color.White, fontSize = 18.sp)
+        }
+
+        // Apagar / Home
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ControlButton(
-                icon = Icons.Filled.PowerSettingsNew,
-                onClick = { viewModel.onApagarClicked() },
-                buttonColor = Color.Red // Botón rojo para apagar
-            )
-            ControlButton(
-                icon = Icons.Filled.Home,
-                onClick = { /* Acción para Home */ },
-                buttonColor = Color.Blue // Botón azul para home
-            )
+            ControlButton(icon = Icons.Filled.PowerSettingsNew, onClick = { viewModel.onApagarClicked() }, buttonColor = Color.Red)
+            ControlButton(icon = Icons.Filled.Home, onClick = { /* Home */ }, buttonColor = Color.Blue)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Fila media: Micrófono - Atrás
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            ControlButton(
-                icon = Icons.Default.KeyboardVoice,
-                onClick = { /* Acción de micrófono */ },
-                buttonColor = Color.Gray // Botón gris para micrófono
-            )
-            Spacer(modifier = Modifier.width(40.dp))
-            ControlButton(
-                icon = Icons.AutoMirrored.Filled.ArrowBack,
-                onClick = { /* Acción de volver */ },
-                buttonColor = Color.Gray // Botón gris para "Atrás"
-            )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Botones direccionales
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            ControlButton(
-                icon = Icons.Filled.KeyboardArrowUp,
-                onClick = { /* Acción arriba */ },
-                buttonColor = Color.LightGray // Botón gris claro para arriba
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Row(horizontalArrangement = Arrangement.Center) {
-                ControlButton(
-                    icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    onClick = { /* Acción izquierda */ },
-                    buttonColor = Color.LightGray // Botón gris claro para izquierda
-                )
-                Spacer(modifier = Modifier.width(40.dp))
-                ControlButton(
-                    icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    onClick = { /* Acción derecha */ },
-                    buttonColor = Color.LightGray // Botón gris claro para derecha
-                )
+        // Navegación tipo Mousepad o Flechas
+        if (showMousepad) {
+            Box(
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.DarkGray)
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = { offset: Offset ->
+                                println("Tap en el mousepad en ${offset.x}, ${offset.y}")
+                            }
+                        )
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Mousepad", color = Color.White)
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            ControlButton(
-                icon = Icons.Filled.KeyboardArrowDown,
-                onClick = { /* Acción abajo */ },
-                buttonColor = Color.LightGray // Botón gris claro para abajo
-            )
+        } else {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ControlButton(icon = Icons.Filled.KeyboardArrowUp, onClick = { }, buttonColor = Color.LightGray)
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(horizontalArrangement = Arrangement.Center) {
+                    ControlButton(icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft, onClick = { }, buttonColor = Color.LightGray)
+                    Spacer(modifier = Modifier.width(20.dp))
+                    ControlButtonWithText(onClick = { /* Acción OK */ }, buttonColor = Color.Green, text = "OK")
+                    Spacer(modifier = Modifier.width(20.dp))
+                    ControlButton(icon = Icons.AutoMirrored.Filled.KeyboardArrowRight, onClick = { }, buttonColor = Color.LightGray)
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                ControlButton(icon = Icons.Filled.KeyboardArrowDown, onClick = { }, buttonColor = Color.LightGray)
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botones de volumen y canal
+        // Botones volumen y canal agrupados
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                ControlButton(
-                    icon = Icons.AutoMirrored.Filled.VolumeUp,
-                    onClick = { /* Subir volumen */ },
-                    buttonColor = Color.Gray // Botón gris para subir volumen
-                )
-                ControlButton(
-                    icon = Icons.AutoMirrored.Filled.VolumeDown,
-                    onClick = { /* Bajar volumen */ },
-                    buttonColor = Color.Gray // Botón gris para bajar volumen
-                )
+            Column(
+                modifier = Modifier
+                    .border(1.dp, Color.Gray, RoundedCornerShape(12.dp))
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ControlButton(icon = Icons.AutoMirrored.Filled.VolumeUp, onClick = { }, buttonColor = Color.Gray)
+                ControlButton(icon = Icons.AutoMirrored.Filled.VolumeDown, onClick = { }, buttonColor = Color.Gray)
             }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                ControlButton(
-                    icon = Icons.Default.Add,
-                    onClick = { /* Subir canal */ },
-                    buttonColor = Color.Gray // Botón gris para subir canal
-                )
-                ControlButton(
-                    icon = Icons.Default.Remove,
-                    onClick = { /* Bajar canal */ },
-                    buttonColor = Color.Gray // Botón gris para bajar canal
-                )
+            // Botón Atrás centrado verticalmente usando un Box
+            Box(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(70.dp), // Ajusta el ancho si es necesario
+                contentAlignment = Alignment.Center
+            ) {
+                ControlButton(icon = Icons.AutoMirrored.Filled.ArrowBack, onClick = { /* Acción atrás */ }, buttonColor = Color.Gray)
+            }
+
+            Column(
+                modifier = Modifier
+                    .border(1.dp, Color.Gray, RoundedCornerShape(12.dp))
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ControlButton(icon = Icons.Default.Add, onClick = { }, buttonColor = Color.Gray)
+                ControlButton(icon = Icons.Default.Remove, onClick = { }, buttonColor = Color.Gray)
             }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Óvalo con "TvMaster"
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp)
-                .padding(top = 16.dp, bottom = 32.dp),
-            contentAlignment = Alignment.Center
+        // Sección de apps con flechas para cambiar página
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = "TvMaster",
-                style = TextStyle(
-                    fontSize = 50.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                ),
-                modifier = Modifier
-                    .background(Color.Gray.copy(alpha = 0.10f), shape = RoundedCornerShape(50)) // Forma ovalada
-                    .padding(horizontal = 24.dp, vertical = 12.dp)
-            )
+            IconButton(onClick = {
+                currentAppPage = (currentAppPage - 1 + appPages.size) % appPages.size
+            }) {
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Izquierda", tint = Color.White)
+            }
+
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.weight(1f)) {
+                appPages[currentAppPage].forEach { appName ->
+                    Box(
+                        modifier = Modifier
+                            .background(Color.DarkGray, RoundedCornerShape(8.dp))
+                            .padding(horizontal = 12.dp, vertical = 8.dp)
+                    ) {
+                        Text(text = appName, color = Color.White)
+                    }
+                }
+            }
+
+            IconButton(onClick = {
+                currentAppPage = (currentAppPage + 1) % appPages.size
+            }) {
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Derecha", tint = Color.White)
+            }
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Switch Mouse / Flechas
+        Button(onClick = { showMousepad = !showMousepad }) {
+            Text(if (showMousepad) "Mostrar Flechas" else "Mostrar Mouse")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -188,19 +195,30 @@ fun ControlButton(icon: ImageVector, onClick: () -> Unit, buttonColor: Color) {
         onClick = onClick,
         modifier = Modifier
             .size(70.dp)
-            .padding(8.dp)
+            .padding(4.dp)
             .background(buttonColor, shape = CircleShape)
             .shadow(4.dp, shape = CircleShape)
     ) {
         Icon(imageVector = icon, contentDescription = null, tint = Color.White)
     }
 }
-
-
-
-@SuppressLint("ViewModelConstructorInComposable")
+@Composable
+fun ControlButtonWithText(onClick: () -> Unit, buttonColor: Color, text: String) {
+    Box(
+        modifier = Modifier
+            .size(70.dp)
+            .padding(4.dp)
+            .background(buttonColor, shape = CircleShape)
+            .shadow(4.dp, shape = CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = text, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+    }
+}
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
 fun PreviewControlScreen() {
-    ControlUI(viewModel = FakeControlViewModel())
+    ControlUI()
 }
