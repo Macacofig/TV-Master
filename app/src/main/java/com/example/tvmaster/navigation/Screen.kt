@@ -5,7 +5,7 @@ sealed class Screen(val route: String) {
     object SplashScreen: Screen("splash")
     object ConexionScreen: Screen("conexion")
     object ConexionFailedScreen: Screen("conexionfailed")
-    object InicioMetodosScreen: Screen("inicio_metodos")
+    object DispositivosEncontradosScreen: Screen("dispositivosencontrados")
     object MenuScreen: Screen("menu")
     object SettingsScreen: Screen("settings")
 }

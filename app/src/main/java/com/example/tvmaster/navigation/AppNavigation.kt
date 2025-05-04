@@ -24,6 +24,7 @@ import com.example.tvmaster.Conexion.ConexionUI
 import com.example.tvmaster.ConexionFailed.ConexionFailedUI
 import com.example.tvmaster.Settings.SettingsUI
 import com.example.tvmaster.Menu.MenuUI
+import com.example.tvmaster.DispositivosEncontrados.DispositivosEncontradosUI
 
 @Composable
 fun AppNavigation() {
@@ -31,21 +32,28 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route,
+        startDestination = Screen.DispositivosEncontradosScreen.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     )
     {
-        composable(Screen.SplashScreen.route)
-        {
-            SplashUI(navController)
-        }
+//        composable(Screen.SplashScreen.route)
+//        {
+//            SplashUI(navController)
+//        }
 
-        composable(Screen.MenuScreen.route)
-        {
-            MenuUI()
+//        composable(Screen.MenuScreen.route)
+//        {
+//            DispositivosEncontradosUI()
+//        }
+
+        // Codigo para navegar hacia atras
+        composable(Screen.DispositivosEncontradosScreen.route) {
+            DispositivosEncontradosUI(
+                onBackClick = { navController.popBackStack() }, // vuelve al menú
+            )
         }
     }
 }
