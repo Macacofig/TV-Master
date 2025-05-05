@@ -28,7 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ControlUI(viewModel: FakeControlViewModel = FakeControlViewModel()) {
+fun ControlUI(
+    onClick: () -> Unit,
+    viewModel: FakeControlViewModel = FakeControlViewModel())
+{
     var currentAppPage by remember { mutableStateOf(0) }
     val appPages = listOf(
         listOf("Netflix", "YouTube", "Prime Video"),
@@ -54,7 +57,7 @@ fun ControlUI(viewModel: FakeControlViewModel = FakeControlViewModel()) {
                 .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* acción volver */ }) {
+            IconButton(onClick = { onClick() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver", tint = Color.White)
             }
             Text("Volver", color = Color.White, fontSize = 18.sp)
@@ -216,9 +219,10 @@ fun ControlButtonWithText(onClick: () -> Unit, buttonColor: Color, text: String)
         Text(text = text, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
     }
 }
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview(showBackground = true)
-@Composable
-fun PreviewControlScreen() {
-    ControlUI()
-}
+
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewControlScreen() {
+//    ControlUI()
+//}

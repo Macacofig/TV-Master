@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SAVED_STATE_REGISTRY_OWNER_KEY
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,22 +33,44 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.DispositivosEncontradosScreen.route,
+        startDestination = Screen.SplashScreen.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
     )
     {
-//        composable(Screen.SplashScreen.route)
-//        {
-//            SplashUI(navController)
-//        }
+        composable(Screen.SplashScreen.route)
+        {
+            SplashUI(navController)
+        }
 
-//        composable(Screen.MenuScreen.route)
-//        {
-//            DispositivosEncontradosUI()
-//        }
+        composable(Screen.MenuScreen.route)
+        {
+            MenuUI(
+                onAgregarClick = {
+                    navController.navigate(Screen.DispositivosEncontradosScreen.route)
+                },
+                onAjustesClick = {
+                    navController.navigate(Screen.SettingsScreen.route)
+                },
+                onConexionClick = {
+                    navController.navigate(Screen.ConexionScreen.route)
+                }
+            )
+        }
+        composable(Screen.ConexionScreen.route) {
+            ConexionUI(
+                onBackClick = { navController.popBackStack() },
+                onConexionExitosa = {navController.navigate(Screen.ControlScreen.route)},
+                onConexionFallida = {navController.navigate(Screen.ConexionFailedScreen.route)}
+            )
+        }
+        composable(Screen.ConexionFailedScreen.route) {
+            ConexionFailedUI(
+                OnClick = {navController.navigate(Screen.MenuScreen.route)}
+            )
+        }
 
         // Codigo para navegar hacia atras
         composable(Screen.DispositivosEncontradosScreen.route) {
@@ -55,5 +78,16 @@ fun AppNavigation() {
                 onBackClick = { navController.popBackStack() }, // vuelve al menú
             )
         }
+        composable(Screen.SettingsScreen.route) {
+            SettingsUI(
+                onBackClick = { navController.popBackStack() },
+            )
+        }
+        composable(Screen.ControlScreen.route) {
+            ControlUI(
+                onClick = {navController.navigate(Screen.MenuScreen.route)}
+            )
+        }
+
     }
 }

@@ -37,7 +37,7 @@ import com.example.tvmaster.R
 import com.example.tvmaster.ui.theme.TVMasterTheme
 
 @Composable
-fun MenuUI() {
+fun MenuUI(onAgregarClick: () -> Unit, onAjustesClick: () -> Unit, onConexionClick: () -> Unit) {
     val semiPlomo = Color(red = 40, green = 40, blue = 40, alpha = 180)
     val plomoClaro = Color(red = 61, green = 61, blue = 61)
     val plomo = Color(red = 40, green = 40, blue = 40)
@@ -82,7 +82,7 @@ fun MenuUI() {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = semiPlomo
                     ),
-                    onClick = { /* Acción que hará el botón */ }
+                    onClick = { onAgregarClick() }
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "Agregar")
                     Spacer(modifier = Modifier.width(8.dp))
@@ -99,7 +99,7 @@ fun MenuUI() {
                     colors = ButtonDefaults.buttonColors(
                         containerColor = semiPlomo
                     ),
-                    onClick = { /* Acción que hará el botón */ }
+                    onClick = { onAjustesClick() }
                 ) {
                     Icon(Icons.Default.Settings, contentDescription = "Ajustes")
                     Spacer(modifier = Modifier.width(8.dp))
@@ -116,6 +116,7 @@ fun MenuUI() {
             Column(
                 modifier = Modifier
                     .width(320.dp)
+                    .height(500.dp)
                     .clip(RoundedCornerShape(15.dp))
                     .background(color = plomo)
                     .padding(0.dp, 0.dp, 0.dp, 10.dp)
@@ -150,7 +151,7 @@ fun MenuUI() {
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White
                         ),
-                        onClick = { /* Acción que hará el botón */ }
+                        onClick = { onConexionClick() }
                     ) {
                         Text(
                             "SALA MONCHE",
@@ -175,7 +176,7 @@ fun MenuUI() {
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White
                         ),
-                        onClick = { /* Acción que hará el botón */ }
+                        onClick = { onConexionClick() }
                     ) {
                         Text(
                             "COMEDOR",
@@ -200,7 +201,7 @@ fun MenuUI() {
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White
                         ),
-                        onClick = { /* Acción que hará el botón */ }
+                        onClick = { onConexionClick() }
                     ) {
                         Text(
                             "ADDAMS LIVING",
@@ -215,8 +216,8 @@ fun MenuUI() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewMenuPantalla() {
-    MenuUI()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewMenuPantalla() {
+//    MenuUI()
+//}

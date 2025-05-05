@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.sp
 import com.example.tvmaster.R
 
 @Composable
-fun ConexionFailedUI() {
+fun ConexionFailedUI(
+    OnClick : () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +37,7 @@ fun ConexionFailedUI() {
                 .padding(16.dp)
         ){
             IconButton(
-                onClick = { /* Acción de volver */ },
+                onClick = { OnClick() },
                 modifier = Modifier
                     .padding(1.dp)
             ) {
@@ -95,8 +97,8 @@ fun ConexionFailedUI() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewConexionFallida() {
-    ConexionFailedUI()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewConexionFallida() {
+//    ConexionFailedUI()
+//}

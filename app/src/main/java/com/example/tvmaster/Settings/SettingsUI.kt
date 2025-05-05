@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -18,50 +20,66 @@ import com.example.tvmaster.R
 
 
 @Composable
-fun SettingsUI() {
-    Column(
+fun SettingsUI(onBackClick: () -> Unit) {
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121212)) // Fondo oscuro
-            .padding(16.dp)
+            .background(Color.Black), // Fondo negro
+        contentAlignment = Alignment.TopCenter // Alineamos al centro superior
     ) {
-        Icon(
-            painter = painterResource(id = android.R.drawable.ic_menu_manage), // Ícono de ajustes
-            contentDescription = stringResource(id = R.string.settings_title),
-            tint = Color.White,
+        Column(
             modifier = Modifier
-                .size(32.dp)
-                .padding(bottom = 16.dp)
-        )
+                .fillMaxSize()
+                .background(Color(0xFF121212)) // Fondo oscuro
+                .padding(16.dp)
+        ) {
 
-        SettingsOption(stringResource(id = R.string.theme_option))
-        SettingsOption(stringResource(id = R.string.customize_buttons))
-        SettingsOption(stringResource(id = R.string.language_option))
-        SettingsOption(stringResource(id = R.string.info_option))
+            // 🔼 Encabezado con flecha y texto "Ajustes"
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { onBackClick() },
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Volver",
+                        tint = Color.White
+                    )
+                }
+                Text(
+                    text = "Ajustes",
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
-        Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-        Text(
-            text = "${stringResource(id = R.string.app_version)}\n" +
-                    "${stringResource(id = R.string.developers)}\n" +
-                    "${stringResource(id = R.string.created_with)}\n" +
-                    "${stringResource(id = R.string.leave_feedback)}",
-            color = Color.White,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Light
-        )
+            // Opciones de ajustes
+            SettingsOption(stringResource(id = R.string.theme_option))
+            SettingsOption(stringResource(id = R.string.customize_buttons))
+            SettingsOption(stringResource(id = R.string.language_option))
+            SettingsOption(stringResource(id = R.string.info_option))
 
-        Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Icon(
-            painter = painterResource(id = android.R.drawable.ic_media_rew), // Ícono de volver
-            contentDescription = "Back Icon",
-            tint = Color.White,
-            modifier = Modifier
-                .size(40.dp)
-                .background(Color.Transparent, shape = CircleShape)
-                .clickable { }
-        )
+            Text(
+                text = "${stringResource(id = R.string.app_version)}\n" +
+                        "${stringResource(id = R.string.developers)}\n" +
+                        "${stringResource(id = R.string.created_with)}\n" +
+                        "${stringResource(id = R.string.leave_feedback)}",
+                color = Color.White,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+        }
     }
 }
 
@@ -78,8 +96,8 @@ fun SettingsOption(title: String) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewSettingsScreen() {
-    SettingsUI()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewSettingsScreen() {
+//    SettingsUI()
+//}
