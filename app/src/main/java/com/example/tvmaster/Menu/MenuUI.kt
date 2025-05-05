@@ -9,7 +9,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.traceEventEnd
@@ -35,6 +40,7 @@ import com.example.tvmaster.ui.theme.TVMasterTheme
 fun MenuUI() {
     val semiPlomo = Color(red = 40, green = 40, blue = 40, alpha = 180)
     val plomoClaro = Color(red = 61, green = 61, blue = 61)
+    val plomo = Color(red = 40, green = 40, blue = 40)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,262 +65,149 @@ fun MenuUI() {
         )
         Column(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
+                .padding(12.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp),
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_volver),
-                    contentDescription = "Remote Control",
+                Button(
                     modifier = Modifier
-                        .size(30.dp)
-                        .clickable {
-                            //Acción al hacer clic
-                        },
-                    tint = Color.Unspecified
-                )
-                Text(
-                    text = "Nombre TV",
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Black),
-                    color = Color.White,
-                    fontSize = 26.sp
-                )
+                        .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = semiPlomo
+                    ),
+                    onClick = { /* Acción que hará el botón */ }
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Agregar")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        "Agregar",
+                        fontSize = 22.sp,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+
+                Button(
+                    modifier = Modifier
+                        .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = semiPlomo
+                    ),
+                    onClick = { /* Acción que hará el botón */ }
+                ) {
+                    Icon(Icons.Default.Settings, contentDescription = "Ajustes")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        "Ajustes",
+                        fontSize = 22.sp,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
             }
+
+
+
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceEvenly
-            ) {
-                //Aplicaciones
-                Card(
+                    .width(320.dp)
+                    .clip(RoundedCornerShape(15.dp))
+                    .background(color = plomo)
+                    .padding(0.dp, 0.dp, 0.dp, 10.dp)
+            ){
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(
-                        containerColor = semiPlomo
+                        .height(50.dp)
+                        .background(color = plomoClaro),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Text(
+                        "Televisores",
+                        fontSize = 21.sp,
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .background(color = plomoClaro)
-                            .fillMaxWidth()
-                            .height(35.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.card01),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = Color.White,
-                            fontSize = 20.sp
-                        )
-                    }
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .height(110.dp),
-                                verticalArrangement = Arrangement.SpaceEvenly,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.netflix),
-                                    contentDescription = "Netflix",
-                                    modifier = Modifier
-                                        .size(80.dp)
-                                        .clickable {
-                                            //Acción al hacer clic
-                                        },
-                                    tint = Color.Unspecified
-                                )
-                                Text(
-                                    modifier = Modifier
-                                        .padding(top = 5.dp),
-                                    text = "Netflix",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
-                                )
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .height(110.dp),
-                                verticalArrangement = Arrangement.SpaceEvenly,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.youtube),
-                                    contentDescription = "YouTube",
-                                    modifier = Modifier
-                                        .size(80.dp)
-                                        .clickable {
-                                            //Acción al hacer clic
-                                        },
-                                    tint = Color.Unspecified
-                                )
-                                Text(
-                                    modifier = Modifier
-                                        .padding(top = 5.dp),
-                                    text = "YouTube",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
-                                )
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .height(110.dp),
-                                verticalArrangement = Arrangement.SpaceEvenly,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.primevideo),
-                                    contentDescription = "Prime Video",
-                                    modifier = Modifier
-                                        .size(80.dp)
-                                        .clickable {
-                                            //Acción al hacer clic
-                                        },
-                                    tint = Color.Unspecified
-                                )
-                                Text(
-                                    modifier = Modifier
-                                        .padding(top = 5.dp),
-                                    text = "Prime Video",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
-                                )
-                            }
-                        }
-                    }
                 }
-                //Mando a distancia
-                Card(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(
-                        containerColor = semiPlomo
-                    )
-                ) {
-                    Column(
+                        .height(55.dp)
+                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Button(
                         modifier = Modifier
-                            .background(color = plomoClaro)
-                            .fillMaxWidth()
-                            .height(35.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                            .height(40.dp)
+                            .width(250.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White
+                        ),
+                        onClick = { /* Acción que hará el botón */ }
                     ) {
                         Text(
-                            text = stringResource(id = R.string.card02),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = Color.White,
-                            fontSize = 20.sp
+                            "SALA MONCHE",
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(bottom = 8.dp),
-                            text = stringResource(id = R.string.texto_card02),
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                            textAlign = TextAlign.Center
-                        )
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clip(CircleShape)
-                                .background(color = Color.Black),
-                            contentAlignment = Alignment.Center
-                        ){
-                            Icon(
-                                painter = painterResource(id = R.drawable.control),
-                                contentDescription = "Remote Control",
-                                modifier = Modifier
-                                    .size(64.dp)
-                                    .padding(top = 8.dp)
-                                    .clickable {
-                                        // Acción al hacer clic
-                                    },
-                                tint = Color.Unspecified,
-                            )
-                        }
                     }
                 }
-                //Compartir contenido
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.cardColors(
-                        containerColor = semiPlomo
-                    )
-                ) {
-                    Column(
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(55.dp)
+                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Button(
                         modifier = Modifier
-                            .background(color = plomoClaro)
-                            .fillMaxWidth()
-                            .height(35.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                            .height(40.dp)
+                            .width(250.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White
+                        ),
+                        onClick = { /* Acción que hará el botón */ }
                     ) {
                         Text(
-                            text = stringResource(id = R.string.card03),
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = Color.White,
-                            fontSize = 20.sp
+                            "COMEDOR",
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
                     }
-                    Column(
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(55.dp)
+                        .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Button(
                         modifier = Modifier
-                            .padding(10.dp)
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .height(40.dp)
+                            .width(250.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White
+                        ),
+                        onClick = { /* Acción que hará el botón */ }
                     ) {
                         Text(
-                            modifier = Modifier
-                                .padding(bottom = 8.dp),
-                            text = stringResource(id = R.string.texto_card03),
-                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
-                            color = Color.White,
-                            textAlign = TextAlign.Center
+                            "ADDAMS LIVING",
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                         )
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clip(CircleShape)
-                                .background(color = Color.Black),
-                            contentAlignment = Alignment.Center
-                        ){
-                            Icon(
-                                painter = painterResource(id = R.drawable.share),
-                                contentDescription = "Remote Control",
-                                modifier = Modifier
-                                    .size(64.dp)
-                                    .padding(top = 8.dp)
-                                    .clickable {
-                                        // Acción al hacer clic
-                                    },
-                                tint = Color.Unspecified,
-                            )
-                        }
                     }
                 }
             }
