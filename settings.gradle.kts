@@ -36,8 +36,7 @@ buildscript {
 
 rootProject.name = "TV Master"
 include(":app")
-include(":framework")
 include(":domain")
 include(":data")
 include(":usecases")
-
+include(":framework")
