@@ -67,5 +67,7 @@ dependencies {
     implementation(libs.hilt.android) // Usa la última versión disponible
     implementation("com.github.ConnectSDK:Connect-SDK-Android:1.6.0")
 
-
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":framework"))
 }
