@@ -65,4 +65,7 @@ dependencies {
 
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android) // Usa la última versión disponible
+    implementation("com.github.ConnectSDK:Connect-SDK-Android:1.6.0")
+
+
 }

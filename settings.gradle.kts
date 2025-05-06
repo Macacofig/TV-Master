@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -16,8 +17,22 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+
+    }
+
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+    dependencies {
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
+
 
 rootProject.name = "TV Master"
 include(":app")
@@ -25,3 +40,4 @@ include(":framework")
 include(":domain")
 include(":data")
 include(":usecases")
+
