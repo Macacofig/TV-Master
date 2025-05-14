@@ -12,5 +12,8 @@ kotlin {
     }
 }
 dependencies{
+    implementation(libs.kotlinx.coroutines.core)
+
+    implementation(project(":domain"))
     implementation(project(":data"))
 }
